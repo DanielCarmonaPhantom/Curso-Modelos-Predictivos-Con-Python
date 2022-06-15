@@ -63,6 +63,8 @@ epoch = 40
 batch_size = 16
 ```
 
+Nota: En el ejemplo se utilizan 4 epoch. Si dejas los 40 puede que tarde 4 horas. 
+
 ### Generar imagenes artificiales
 ```Python
 train_datagen = ImageDataGenerator(
