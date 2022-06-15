@@ -101,3 +101,34 @@ valid_generator = valid_datagen.flow_from_directory(
     class_mode = 'categorical'
 )
 ```
+```Bash
+Found 878 images belonging to 2 classes.
+Found 110 images belonging to 2 classes.
+```
+
+Se guardan los datos:
+```Python
+nb_train_samples = 878
+nb_valid_samples = 110
+```
+
+```Python
+image_input = Input(shape=(width_shape, height_shape, 3)) # Se coloca 3 para los 3 colores
+
+m_Resnet50 = resnet50.ResNet50(input_tensor = image_input, include_top = 'False', weights='imagenet')
+m_Resnet50.summary()
+```
+
+```Python
+last_layer = m_Resnet50.layers[-1].output
+
+x = Flatten(name = 'flatter')(last_layer)
+x = Dense(128, activation = 'relu', name = 'fc1')(x)
+x = Dropout(0.3)(x)
+x = Dense(128, activation = 'relu', name = 'fc2')(x)
+x = Dropout(0.3)(x)
+
+out = Dense(num_classes, activation='softmax', name= 'output')(x)
+custom_model = Model(image_input, out)
+custom_model.summary()
+```
